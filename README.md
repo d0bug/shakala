@@ -1,6 +1,7 @@
 # shakala
 
 ##### shakala —— A tiny batch multi-ports scanner base on nmap
+
 				__              __              __
 			   [  |            [  |  _         [  |
 		 .--.   | |--.   ,--.   | | / ]  ,--.   | |  ,--.
@@ -8,8 +9,18 @@
 		 `'.'.  | | | | // | |, | |`\ \ // | |, | | // | |,
 		[\__) )[___]|__]'-;__/[__|  \_]'-;__/[___]'-;__/
 
+
 ##### Email: LandGrey@qq.com
 -
+
+## features
+```
+1.	provide over 300 common pentest prots, and keep update
+2.  accurate and fast scan call nmap
+3.  provide scan metadata and results analyse
+4.  friendly input targets and ports and results output
+5.  compatible both python 2.x and 3.x
+```
 
 ## start:
 ```
@@ -27,9 +38,9 @@ python shakala.py
    specify target extend mode
    specify scan threads
    wait for scan over
-[2] handle
+[2] analyse
    filter target from results based on port or service
-   finish or analyse scan metadata
+   finish or single analyse scan metadata if the program stops halfway, than select results
 ```
 
 ## usage:
