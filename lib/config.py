@@ -42,12 +42,21 @@ try:
 except:
     exit("\n[-] Please ensure pydictor root path is ascii strings!")
 
+output_root_path = os.path.join(root_path, 'outputs')
+
 
 def get_time():
     return str(time.strftime("%Y%m%d_%H%M%S", time.localtime(time.time())))
 
-output_path = os.path.join(root_path, 'outputs', get_time())
-result_file_path = os.path.join(root_path, 'outputs', 'result_' + get_time() + '.txt')
+
+if not os.path.exists(output_root_path):
+    try:
+        os.mkdir(os.path.join(root_path, 'outputs'))
+    except:
+        exit("\n[-] Cannot create dir: %s" % output_root_path)
+
+output_path = os.path.join(output_root_path, get_time())
+result_file_path = os.path.join(output_root_path, 'result_' + get_time() + '.txt')
 port_list_file_path = os.path.join(root_path, 'lib', 'ports.txt')
 
 # some description
@@ -97,7 +106,7 @@ def get_count(get_original_ip_count=False, get_parsed_ip_count=False, get_scan_i
     elif get_scan_items_count:
         return scan_items_count
     else:
-        exit("[-] cannot get any count")
+        exit("\n[-] Cannot get any count")
 
 
 def set_count(set_original_ip_count=False, set_parsed_ip_count=False, set_scan_items_count=False):
@@ -112,7 +121,7 @@ def set_count(set_original_ip_count=False, set_parsed_ip_count=False, set_scan_i
     elif set_scan_items_count:
         scan_items_count += 1
     else:
-        exit("[-] cannot set any count")
+        exit("\n[-] Cannot set any count")
 
 
 def get_threads():
