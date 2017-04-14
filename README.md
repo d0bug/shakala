@@ -15,7 +15,7 @@
 
 ## features
 ```
-1.  provide over 300 common pentest prots, and keep update
+1.  provide over 300 common pentest ports, and keep update
 2.  accurate and fast scan call nmap
 3.  provide scan metadata and results analyse
 4.  friendly input targets and ports and results output
