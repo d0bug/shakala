@@ -53,9 +53,9 @@ def select_by_service(original_path, service):
             for line in f.readlines():
                 chunk = line.strip().split(',')
                 for status in port_selection:
-                    if len(chunk) == 5 and chunk[4] == service and chunk[3] == status:
-                        print(cool.white("[+] %s" % chunk[0]))
-                        s.write(chunk[0] + '\n')
+                    if len(chunk) == 5 and service in chunk[4] and chunk[3] == status:
+                        print(cool.white("[+] %s:%s" % (chunk[0], chunk[1])))
+                        s.write(chunk[0] + ':' + chunk[1] + '\n')
 
     if os.path.getsize(save_path) > 0:
         print(cool.orange("\n[+] Store in: %s" % save_path))

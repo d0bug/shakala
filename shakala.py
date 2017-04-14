@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding:utf-8
 #
-# A tiny batch multi-ports scanner base on nmap -- shakala
+# A tiny batch multi-ports scanner based on nmap -- shakala
 #
 """
 Copyright (c) 2017 shakala developers (https://github.com/LandGrey/shakala)
@@ -50,13 +50,22 @@ if __name__ == "__main__":
         else:
             exit(cool.red("[-] File:%s don't exists" % arg.select[0]))
     else:
+        if arg.rmself != 'default':
+            remself = 'true'
+        else:
+            remself = 'false'
         try:
-            init(target_choice=arg.target, port_choice=arg.port, extend_choice=arg.extend)
+            init(target_choice=arg.target, port_choice=arg.port, extend_choice=arg.extend, rmself=remself)
             start()
             if os.path.exists(output_path):
                 result_handler(output_path, result_file_path)
-                print(cool.white("\n[+] Store in: {0}".format(output_path)))
-                print(cool.orange("              {0}".format(result_file_path)))
+                if os.path.getsize(result_file_path) > 0:
+                    print(cool.white("\n[+] Store in: {0}".format(output_path)))
+                    print(cool.orange("              {0}".format(result_file_path)))
+                else:
+                    os.remove(result_file_path)
+                    print(cool.fuchsia("\n[!] Found nothing"))
+                    print(cool.white("[+] Metadata   in: {0}".format(output_path)))
             print(cool.orange("[+] Cost : {0:.6} seconds".format(time.time() - start_time)))
         except KeyboardInterrupt:
             print(cool.green("\n[*] User quit !"))

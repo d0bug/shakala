@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding:utf-8
 #
-# A tiny batch multi-ports scanner base on nmap -- shakala
+# A tiny batch multi-ports scanner based on nmap -- shakala
 #
 """
 Copyright (c) 2017 shakala developers (https://github.com/LandGrey/shakala)
@@ -165,12 +165,12 @@ def init_port(port_choice):
         set_port_string(port_choice.strip())
 
     if len(ports_pool) != 0:
-        print(cool.orange("[+] Load {0} ports".format(len(ports_pool))))
+        print(cool.orange("[+] Load: {0} ports".format(len(ports_pool))))
     else:
         exit(cool.red("[-] Cannot find port"))
 
 
-def init_extend(extend_choice):
+def init_extend(extend_choice, rmself):
     # no
     if extend_choice == cli_no_extend:
         print(cool.white("[+] Use extend mode: %s" % cli_no_extend))
@@ -179,30 +179,46 @@ def init_extend(extend_choice):
         if extend_choice == cli_net_extend:
             print(cool.white("[+] Use extend mode: /24"))
             tmp1 = []
+            rm1 = []
             for _ in targets_pool:
+                rm1.append(_)
                 e_split = _.split(".")
                 for e in range(0, 256):
                     tmp1.append("{0}.{1}.{2}.{3}".format(e_split[0], e_split[1], e_split[2], str(e)))
             targets_pool.extend(tmp1)
+            if rmself == 'true':
+                rmlistself(rm1, targets_pool)
+
         elif 1 <= int(extend_choice) <= 255:
             print(cool.orange("[+] Use extend mode: +/- %s" % extend_choice))
             tmp2 = []
+            rm2 = []
             for _ in targets_pool:
+                rm2.append(_)
                 e_split = _.split(".")
                 for e in range(min(int(e_split[3]) - int(extend_choice), int(e_split[3]) - 1) if int(e_split[3]) -
                         int(extend_choice) >= 0 else 0, min(int(e_split[3]) + int(extend_choice) + 1, 256)):
                     tmp2.append("{0}.{1}.{2}.{3}".format(e_split[0], e_split[1], e_split[2], str(e)))
             targets_pool.extend(tmp2)
 
+            if rmself == 'true':
+                rmlistself(rm2, targets_pool)
 
-def init(target_choice, port_choice, extend_choice):
+
+def rmlistself(rmlist, rawlist):
+    for _ in rmlist:
+        while rawlist.count(_) != 0:
+            rawlist.remove(_)
+
+
+def init(target_choice, port_choice, extend_choice,  rmself):
     print(cool.green("[+] Init ..."))
     print(cool.white("[+] Threads: {0}".format(str(get_threads()))))
     check_cmd_status()
     init_target(target_choice)
     init_port(port_choice)
     auto_choose_start()
-    init_extend(extend_choice)
+    init_extend(extend_choice, rmself=rmself)
     print(cool.orange("[+] Load: {0} targets".format(len(unique(targets_pool)))))
     if len(unique(targets_pool)) > 0:
         create_output_file()

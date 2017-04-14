@@ -24,7 +24,8 @@ shakala.py [options]
          -p         port
          -e         extend
          -a         dir
-         -s         file port|service
+         -s         file port |  service
+         --rmself   will remove itself
          --threads  threads'''.format(cli_all_port, cli_no_extend, cli_net_extend)))
 
     parser.add_argument('-t', dest='target', metavar='target', type=str, default="",
@@ -37,13 +38,13 @@ path     use single file'''))
                         default=port_list_file_path, help=cool.yellow('''
 specify  80-89,888,8080-8088
 {0:8} use all ports: 0-65535
-path     default option: {1}'''.format(cli_all_port, port_list_file_path)))
+path     (default): {1}'''.format(cli_all_port, port_list_file_path)))
 
     parser.add_argument('-e', dest='extend', metavar='mode', type=str, default=cli_no_extend,
                         help=cool.yellow('''
 numbers  increase or decrease numbers target in /24 range
 {0:8} extend whole network address: /24
-{1:8} default option'''.format(cli_net_extend, cli_no_extend)))
+{1:8} (default)'''.format(cli_net_extend, cli_no_extend)))
 
     parser.add_argument('-a', dest='analyse', metavar='dir', type=str, default='',
                         help=cool.yellow('''
@@ -54,6 +55,10 @@ dir      analyse the result use directory'''))
                         help=cool.yellow('''
 file_path port_or_service
          file must be shakala 'result_' prefix file'''))
+
+    parser.add_argument('--rmself', dest='rmself', action="store_true", default='default',
+                        help=cool.yellow('''
+provide for '-e extend' '''))
 
     parser.add_argument('--threads', dest='threads', metavar='threads', type=str, default=get_threads(),
                         help=cool.yellow('''
