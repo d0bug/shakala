@@ -47,7 +47,7 @@ python shakala.py
 ```
 python shakala.py -t www.example.com
 python3 shakala.py -t /domains.txt -p /ports.txt -e 5 --threads 80
-python3 shakala.py -t http://victim.com/p?=1,192.168.20-60 -e 30 -p 80,81,8080,8090,8000-8100
+python3 shakala.py -t http://victim.com/p?=1,192.168.1.20-60 -e 30 -p 80,81,8080,8090,8000-8100
 
 python shakala.py -s /shakala/outputs/results_xxx.txt http
 python shakala.py -s /shakala/outputs/results_xxx.txt 8080
